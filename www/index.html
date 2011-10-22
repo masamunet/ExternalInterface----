@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja" dir="ltr">
+<head>
+	<title>ExternalInterfaceの実験</title>
+	<script src="http://www.google.com/jsapi" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		google.load("swfobject", "2.2"); 
+	</script>
+	<script type="text/javascript">
+	;(function(){
+		var swfDirectory = "./";
+		var swfFileName = "externalinterfaceSample.swf";
+		var targetId = "flashcontent";
+		var width = "400";
+		var height = "50";
+		var version = "9.0.45";
+		var expressInstall = swfDirectory+"commons/scripts/swfobject/expressInstall.swf";
+		var flashvars = {};
+		flashvars.jsNamespace = "jp_utweb_ExternalInterface_sample";
+		var params = {};
+		params.menu = "false";
+		params.quality = "best";
+		params.scale = "noscale";//showAll
+		params.salign = "tl";
+		params.wmode = "transparent";//opaque wmode
+		params.swliveconnect = "true";
+		params.allowfullscreen = "true";
+		params.allowscriptaccess = "always";
+		params.allownetworking = "all";
+		var attributes = {};
+		attributes.id = "external_content";
+		attributes.name = "external_content";
+		attributes.align = "middle";
+		swfobject.embedSWF(swfDirectory+swfFileName, targetId, width, height, version, expressInstall, flashvars, params, attributes);
+	})();
+	</script>
+	<script>
+	;var jp_utweb_ExternalInterface_sample;
+	(function(){
+		this.getElementFromName = function(name){
+			if (navigator.appName.indexOf("Microsoft") != -1){
+				return window[name];
+			}else{
+				return document[name];
+			}
+		};
+		jp_utweb_ExternalInterface_sample = function(){
+			return {
+				ready:this.reary,
+				clickHoge:this.clickHoge,
+				clickFuga:this.clickFuga
+			};
+		};
+		jp_utweb_ExternalInterface_sample.ready = function(){
+		};
+		jp_utweb_ExternalInterface_sample.clickHoge = function(){
+			var swf = getElementFromName("external_content");
+			if(swf){
+				swf.jsHoge();
+			}
+		};
+		jp_utweb_ExternalInterface_sample.clickFuga = function(){
+			var swf = getElementFromName("external_content");
+			if(swf){
+				swf.jsFuga();
+			}
+		};
+	})();
+	</script>
+</head>
+<body>
+	<div id="flashcontent"></div>
+	<br />
+	<input type="button" value="ほげ" onClick="jp_utweb_ExternalInterface_sample.clickHoge();" />
+	<br />
+	<input type="button" value="ふが" onClick="jp_utweb_ExternalInterface_sample.clickFuga();" />
+</body>
+</html>
